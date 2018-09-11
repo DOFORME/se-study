@@ -1,4 +1,4 @@
-package com.study.lc.main;
+package com.lc.study.se;
 
 public class HelloWorld {
     public static void main(String[] args){
