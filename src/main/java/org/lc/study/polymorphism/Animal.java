@@ -65,6 +65,14 @@ public class Animal {
         System.out.println("animal eat method");
     }
 
+    protected Animal getSelf() {
+        return new Animal();
+    }
+
+    public String toString() {
+        return "animal";
+    }
+
     public static void main(String[] args) {
         Animal animal = new Husky();
         System.out.println(">>>>>>>");

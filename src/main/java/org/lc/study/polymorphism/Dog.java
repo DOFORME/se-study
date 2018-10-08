@@ -38,4 +38,12 @@ public class Dog extends Animal {
     public void eat() {
         System.out.println("dog eat method");
     }
+
+    protected Dog getSelf() {
+        return new Dog();
+    }
+
+    public String toString() {
+        return "dog";
+    }
 }
