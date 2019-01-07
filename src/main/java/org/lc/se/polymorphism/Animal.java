@@ -1,4 +1,4 @@
-package org.lc.study.polymorphism;
+package org.lc.se.polymorphism;
 
 public class Animal {
 
@@ -69,20 +69,4 @@ public class Animal {
         return new Animal();
     }
 
-    public String toString() {
-        return "animal";
-    }
-
-    public static void main(String[] args) {
-        Animal animal = new Husky();
-        System.out.println(">>>>>>>");
-        animal.run();
-        animal.eat();
-        System.out.println(animal.age);
-        System.out.println(((Husky) animal).age);
-
-        System.out.println(">>>>>>>");
-        Husky husky = new Husky();
-        System.out.println(husky.kg);
-    }
 }

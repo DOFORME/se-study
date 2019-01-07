@@ -1,4 +1,4 @@
-package org.lc.study.encrypt;
+package org.lc.se.encrypt;
 
 import java.util.UUID;
 

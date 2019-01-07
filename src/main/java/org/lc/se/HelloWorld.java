@@ -1,4 +1,4 @@
-package org.lc.study;
+package org.lc.se;
 
 public class HelloWorld {
 
