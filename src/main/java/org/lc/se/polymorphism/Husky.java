@@ -1,6 +1,6 @@
 package org.lc.se.polymorphism;
 
-public class Husky extends org.lc.study.polymorphism.Dog {
+public class Husky extends Dog {
 
     public Husky() {
         System.out.println("husky no argument constructor");
@@ -26,6 +26,7 @@ public class Husky extends org.lc.study.polymorphism.Dog {
 
     public int age = 1;
 
+    @Override
     public void run() {
         System.out.println("husky run method");
     }

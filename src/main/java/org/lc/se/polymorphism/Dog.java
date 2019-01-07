@@ -1,6 +1,5 @@
-package org.lc.study.polymorphism;
+package org.lc.se.polymorphism;
 
-import org.lc.se.polymorphism.Animal;
 
 public class Dog extends Animal {
 
@@ -41,10 +40,12 @@ public class Dog extends Animal {
         System.out.println("dog eat method");
     }
 
+    @Override
     protected Dog getSelf() {
         return new Dog();
     }
 
+    @Override
     public String toString() {
         return "dog";
     }

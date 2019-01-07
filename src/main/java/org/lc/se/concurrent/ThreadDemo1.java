@@ -1,4 +1,4 @@
-package org.lc.study.concurrent;
+package org.lc.se.concurrent;
 
 public class ThreadDemo1 extends Thread {
 

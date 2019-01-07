@@ -1,7 +1,5 @@
 package org.lc.se.encrypt;
 
-import sun.plugin2.message.Message;
-
 import java.security.MessageDigest;
 import java.util.Base64;
 
