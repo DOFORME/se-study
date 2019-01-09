@@ -1,6 +1,7 @@
 package org.lc.se.api;
 
+@FunctionalInterface
 public interface LambdaDemoInterface<T> {
 
-    int test(T t);
+    void test(T t);
 }

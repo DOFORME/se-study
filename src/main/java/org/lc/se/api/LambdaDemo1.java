@@ -6,8 +6,11 @@ import java.util.Comparator;
 public class LambdaDemo1 {
 
     public static void main(String[] args) throws Exception {
-        testLambda1();
+//        testLambda1();
 
+//        testLambdaMethodInvoke();
+
+        testLambdaConstructorInvoke();
     }
 
 
@@ -26,7 +29,8 @@ public class LambdaDemo1 {
             System.out.println(s);
             System.out.println(string);
             System.out.println(j);
-            return 0;
+            // 有返回值时需要
+//            return 0;
         };
         for (int i=0; i<5; i++) {
 //            LambdaDemoInterface ldi = s -> System.out.println(i);
@@ -52,6 +56,21 @@ public class LambdaDemo1 {
 
         Comparator<MyNum> comparator1 = (MyNum::compareTo);
         System.out.println(comparator1.compare(num1, num2));
+    }
+
+    private static void testLambdaMethodInvoke() {
+        LambdaDemoInterface<String> lambdaDemoInterface = System.out::println;
+        lambdaDemoInterface.test("abc");
+    }
+
+    private static void testLambdaConstructorInvoke() {
+        LambdaDemoInterface<String> lambdaDemoInterface = s -> {
+            System.out.println(s);
+            System.out.println("method invoke");
+        };
+        lambdaDemoInterface.test("abc");
+        lambdaDemoInterface = LambdaDemoInterfaceImpl::new;
+        lambdaDemoInterface.test("abc");
     }
 
 }
