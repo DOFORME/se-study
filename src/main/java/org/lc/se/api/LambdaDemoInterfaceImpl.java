@@ -5,6 +5,7 @@ public class LambdaDemoInterfaceImpl implements LambdaDemoInterface<String> {
     LambdaDemoInterfaceImpl() {}
 
     LambdaDemoInterfaceImpl(String s) {
+        System.out.println("give interface my constructor");
         System.out.println(s);
     }
 

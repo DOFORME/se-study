@@ -5,10 +5,15 @@ import java.util.Comparator;
 public class MyNumTest {
 
     public static void main(String[] args) {
-        MyNumTest myNumTest = new MyNumTest();
+//        MyNumTest myNumTest = new MyNumTest();
+//
+//        myNumTest.testComparable();
+//        myNumTest.testComparator();
 
-        myNumTest.testComparable();
-        myNumTest.testComparator();
+//        testNullParameter();
+
+        System.out.println(Integer.MAX_VALUE);
+        System.out.println(Integer.MIN_VALUE);
     }
 
     private void testComparable() {
@@ -27,6 +32,13 @@ public class MyNumTest {
         myNum1.setNum(15);
         myNum2.setNum(100);
         int result = comparator.compare(myNum1, myNum2);
+        System.out.println(result);
+    }
+
+    private static void testNullParameter() {
+        MyNum myNum1 = new MyNum();
+        myNum1.setNum(5);
+        int result = myNum1.compareTo(null);
         System.out.println(result);
     }
 }

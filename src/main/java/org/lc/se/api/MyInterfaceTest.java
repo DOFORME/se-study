@@ -7,17 +7,19 @@ import java.lang.reflect.Modifier;
 public class MyInterfaceTest {
 
     public static void main(String[] args) throws Exception {
-        testFieldModifier();
+//        testFieldModifier();
+//
+//        testInterfaceAbstractStaticDefaultMethod();
+//
+//        testInterfaceSuperClassConflict();
+//
+//        testInterfaceSuperClassConflict2();
+//
+//        testFieldInInherit();
+//
+//        testInterfaceSuperClassConflict3();
 
-        testInterfaceAbstractStaticDefaultMethod();
-
-        testInterfaceSuperClassConflict();
-
-        testInterfaceSuperClassConflict2();
-
-        testFieldInInherit();
-
-        testInterfaceSuperClassConflict3();
+        testSuperInterfaceConstant();
     }
 
     /**
@@ -82,5 +84,10 @@ public class MyInterfaceTest {
         // 冲突
         System.out.println(myInterface  .CONFLICT_FIELD);
         System.out.println(MyInterface1Impl.CONFLICT_FIELD);
+    }
+
+    static void testSuperInterfaceConstant() {
+        System.out.println(MySubInterface.MY_NUM);
+        System.out.println(MySubInterface.TEST);
     }
 }

@@ -10,7 +10,9 @@ public class LambdaDemo1 {
 
 //        testLambdaMethodInvoke();
 
-        testLambdaConstructorInvoke();
+//        testLambdaConstructorInvoke();
+
+        testLambdaFreeVariable();
     }
 
 
@@ -61,6 +63,8 @@ public class LambdaDemo1 {
     private static void testLambdaMethodInvoke() {
         LambdaDemoInterface<String> lambdaDemoInterface = System.out::println;
         lambdaDemoInterface.test("abc");
+
+
     }
 
     private static void testLambdaConstructorInvoke() {
@@ -70,6 +74,24 @@ public class LambdaDemo1 {
         };
         lambdaDemoInterface.test("abc");
         lambdaDemoInterface = LambdaDemoInterfaceImpl::new;
+        lambdaDemoInterface.test("abcd");
+    }
+
+    static void testLambdaFreeVariable() {
+        String s = "test";
+        MyNum myNum = new MyNum();
+        int i = 2;
+        LambdaDemoInterface<String> lambdaDemoInterface = s1 -> {
+            // 不能定义已经有的变量
+//            String s = "s2";
+            // Variable used in lambda expression should be final or effectively final
+//            i--;
+            System.out.println(s);
+            System.out.println(myNum.getNum());
+            System.out.println(i);
+        };
+        // Variable used in lambda expression should be final or effectively final
+//        i = 10;
         lambdaDemoInterface.test("abc");
     }
 
