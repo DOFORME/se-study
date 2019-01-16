@@ -24,9 +24,17 @@ public class InnerClassDemo {
             System.out.println(s);
             System.out.println(InnerClassDemo.this.s);
         }
+
+        // Inner classes cannot have static declarations
+//        static void test() {
+//            System.out.println();
+//        }
     }
 }
 
+/**
+ * 文件类
+ */
 class MyClass {
 
     void myMethod() {

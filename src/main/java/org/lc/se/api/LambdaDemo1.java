@@ -1,7 +1,10 @@
 package org.lc.se.api;
 
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class LambdaDemo1 {
 
@@ -12,7 +15,15 @@ public class LambdaDemo1 {
 
 //        testLambdaConstructorInvoke();
 
-        testLambdaFreeVariable();
+//        testLambdaFreeVariable();
+
+//        testLoopUseLambda();
+
+//        testLogicOperationWithLambda();
+
+//        testLambdaMethodReference();
+
+        testStreamAPI();
     }
 
 
@@ -93,6 +104,52 @@ public class LambdaDemo1 {
         // Variable used in lambda expression should be final or effectively final
 //        i = 10;
         lambdaDemoInterface.test("abc");
+    }
+
+    static void testLoopUseLambda() {
+        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
+
+        // 两种方法选择一种
+        integers.forEach(System.out::println);
+//        integers.forEach(n -> System.out.println(n));
+    }
+
+    static void testLogicOperationWithLambda() {
+        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
+
+        System.out.println("输出所有：");
+        evaluate(integers, (n) -> true);
+
+        System.out.println("输出偶数");
+        evaluate(integers, n -> n % 2 == 0);
+
+    }
+
+    static void evaluate(List<Integer> list, Predicate<Integer> predicate) {
+        for (int i : list) {
+            if (predicate.test(i)) {
+                System.out.println(i + " ");
+            }
+        }
+    }
+
+    /**
+     * lambda方法引用
+     * Class::instanceMethod形式
+     * 等同x.instanceMethod(y)
+     */
+    static void testLambdaMethodReference() {
+        LambdaCompare lc = String::compareTo;
+        int result = lc.test("a", "b");
+        System.out.println(result);
+        System.out.println(lc.test("c", "b"));
+    }
+
+    static void testStreamAPI() {
+        List<Integer> integers = Arrays.asList(1, 2, 3, 4, 5);
+        integers.stream().map(x -> x * x).forEach(System.out::println);
+        int sum = integers.stream().reduce((x, y) -> x + y).get();
+        System.out.println(sum);
     }
 
 }
