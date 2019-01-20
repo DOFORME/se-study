@@ -1,15 +1,15 @@
 package org.lc.se.concurrent;
 
-public class ThreadDemo1 extends Thread {
+public class ThreadTest1 extends Thread {
 
     String v1 = null;
     String v2 = null;
 
     public static void main(String[] args) throws Exception {
         long start = System.currentTimeMillis();
-        ThreadDemo1 t1 = new ThreadDemo1();
+        ThreadTest1 t1 = new ThreadTest1();
         t1.start();
-        ThreadDemo1 t2 = new ThreadDemo1();
+        ThreadTest1 t2 = new ThreadTest1();
         t2.start();
         t1.join();
         t2.join();

@@ -2,7 +2,7 @@ package org.lc.se.concurrent;
 
 import java.util.concurrent.*;
 
-public class ThreadTest {
+public class ThreadCreateTest {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         testMyThread();
