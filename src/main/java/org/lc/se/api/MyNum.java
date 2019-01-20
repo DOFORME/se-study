@@ -1,13 +1,11 @@
 package org.lc.se.api;
 
-import com.sun.istack.internal.NotNull;
-
 public class MyNum implements Comparable<MyNum> {
 
     private int num;
 
     @Override
-    public int compareTo(@NotNull MyNum o) {
+    public int compareTo(MyNum o) {
         if (o.num == num) {
             return 0;
         } else if(o.num > num) {

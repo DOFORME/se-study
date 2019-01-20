@@ -6,6 +6,10 @@ public class SynchronizedTest implements Runnable {
     static int i = 0;
 
     public static void main(String[] args) throws Exception {
+        testAddWithoutSynchronized();
+    }
+
+    static void testAddWithoutSynchronized() throws Exception {
         Thread t = new Thread(instance);
         Thread t2 = new Thread(instance);
         t.start();
