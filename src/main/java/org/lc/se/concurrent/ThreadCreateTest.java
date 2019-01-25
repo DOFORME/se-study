@@ -11,7 +11,7 @@ import java.util.concurrent.*;
 public class ThreadCreateTest {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        testMyThread();
+//        testMyThread();
 
 //        testMyRunnable();
 
@@ -21,7 +21,13 @@ public class ThreadCreateTest {
 
 //        testMyCallableWithFuture();
 
+//        testMyCallable();
+
 //        testMyCallableWithFutureTask();
+
+//        testExecutorService();
+
+        testExecutorService2();
     }
 
     /**
@@ -66,6 +72,15 @@ public class ThreadCreateTest {
         System.out.println(f.get());
     }
 
+    static void testMyCallable() throws ExecutionException, InterruptedException {
+        MyCallable mc = new MyCallable();
+        FutureTask<Integer> futureTask =  new FutureTask<Integer>(mc);
+        Thread thread = new Thread(futureTask, "test");
+        thread.start();
+        System.out.println(futureTask.get());
+        System.out.println(thread.getName());
+    }
+
     static void testMyCallableWithFutureTask() throws ExecutionException, InterruptedException {
         ExecutorService es = Executors.newSingleThreadExecutor();
         MyCallable mc = new MyCallable();
@@ -73,5 +88,22 @@ public class ThreadCreateTest {
         es.submit(ft);
         es.shutdown();
         System.out.println(ft.get());
+    }
+
+    static void testExecutorService() {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Thread t = new MyThread();
+        es.execute(t);
+        es.shutdown();
+    }
+
+    static void testExecutorService2() {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+//        ExecutorService es = Executors.newFixedThreadPool(0)
+        for (int i=0; i<5; i++) {
+            Runnable runnable = new MyRunnable();
+            es.execute(runnable);
+        }
+        es.shutdown();
     }
 }
