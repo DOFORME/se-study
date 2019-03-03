@@ -7,11 +7,16 @@ import java.nio.CharBuffer;
  * 参考1（https://juejin.im/post/5af79bcc51882542ad771546）
  * 参考2（https://www.yiibai.com/java/io/reader_read_charbuffer.html）
  */
-public class InputStreamTest {
+public class InputOutputStreamTest {
 
     static String path = "/Users/lc/Desktop/test";
 
+    static String windowsTestFilePath = "/test.txt";
+
     public static void main(String[] args) {
+//        查看系统文件编码格式
+//        System.out.println(System.getProperty("file.encoding"));
+
 //        readDataFromFileWithReader1();
 //        readDataFromFileWithReader2();
 //        readDataFromFileWithReader3();
@@ -22,7 +27,15 @@ public class InputStreamTest {
 //        testAvailable();
 //        testMark1();
 //        testMark2();
-        testSkip();
+//        testSkip();
+
+//        testBufferReader();
+
+//        testStringReader();
+
+//        testWriteWithAppend();
+
+
     }
 
     /**
@@ -278,4 +291,49 @@ public class InputStreamTest {
             }
         }
     }
+
+    private static void testBufferReader() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(windowsTestFilePath));
+            // 检查流是否准备被读取
+            System.out.println(br.ready());
+            String str;
+            while ((str = br.readLine()) != null) {
+                System.out.println(str);
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 测试创建字符串流
+     */
+    private static void testStringReader() {
+        String str = "this is a test string";
+        Reader reader = new StringReader(str);
+        char[] chars = new char[50];
+        try {
+            while (reader.read(chars) != -1) {
+                System.out.println(chars);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void testWriteWithAppend() {
+        File file = new File("d://test.txt");
+        String s = "append new string";
+        try {
+            Writer writer = new FileWriter(file, true);
+            writer.write(s);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
