@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public class SystemInputOutputStream {
     private static byte[] BUFFER = new byte[1024];
     private static final String S = "this string for test...";
 
     public static void main(String[] args) {
-//        testSystemIn();
-//        testSystemOut();
+        testSystemIn();
+        testScanner();
+        testSystemOut();
         testSystemOutWithFormatter();
     }
 
@@ -25,6 +27,13 @@ public class SystemInputOutputStream {
             is.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void testScanner() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            System.out.println(scanner.next());
         }
     }
 
