@@ -1,9 +1,6 @@
 package org.lc.se.io;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Scanner;
 
 public class SystemInputOutputStream {
@@ -11,10 +8,11 @@ public class SystemInputOutputStream {
     private static final String S = "this string for test...";
 
     public static void main(String[] args) {
-        testSystemIn();
+//        testSystemIn();
         testScanner();
-        testSystemOut();
-        testSystemOutWithFormatter();
+//        testScannerWithFile();
+//        testSystemOut();
+//        testSystemOutWithFormatter();
     }
 
     private static void testSystemIn() {
@@ -34,6 +32,22 @@ public class SystemInputOutputStream {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
             System.out.println(scanner.next());
+            if ("n".equalsIgnoreCase(scanner.next())) {
+                return;
+            }
+        }
+    }
+
+    private static void testScannerWithFile() {
+        try {
+//            Scanner scanner = new Scanner(new File("/test.txt"), "gbk");
+            // 如果编码不一致则无法读取，需要使用上面的指定编码的方式
+            Scanner scanner = new Scanner(new File("/test2.txt"));
+            while (scanner.hasNext()) {
+                System.out.println(scanner.next());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
