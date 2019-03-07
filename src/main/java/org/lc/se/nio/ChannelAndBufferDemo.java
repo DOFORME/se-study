@@ -8,6 +8,11 @@ import java.nio.channels.FileChannel;
 
 /**
  * http://ifeve.com/buffers/
+ * 四种channel：
+ * FileChannel
+ * DatagramChannel
+ * SocketChannel
+ * ServerSocketChannel
  */
 public class ChannelAndBufferDemo {
 

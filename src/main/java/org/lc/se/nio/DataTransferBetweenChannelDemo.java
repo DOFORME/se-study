@@ -37,15 +37,16 @@ public class DataTransferBetweenChannelDemo {
         testTransfer();
     }
 
+    /**
+     * 从from channel将数据传输到to channel
+     */
     private static void testTransfer() {
         FileChannel from = RANDOM_ACCESS_FILE.getChannel();
         FileChannel to = RANDOM_ACCESS_FILE2.getChannel();
         ByteBuffer bb = ByteBuffer.allocate(100);
         ByteBuffer bb2 = ByteBuffer.allocate(100);
         try {
-//            from.read(bb2);
-//            bb2.flip();
-//            to.transferFrom(from, 0, from.size());
+            to.transferFrom(from, 0, from.size());
             to.read(bb2);
             bb2.flip();
             while (bb.hasRemaining()) {
