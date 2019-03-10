@@ -22,12 +22,6 @@ public class FileChannelDemo {
             String msg = readDataFromChannelWithoutGarbled(channel);
             System.out.println(msg);
         }
-
-//        CharBuffer cb = CharBuffer.allocate(10);
-//        if (cb.limit() == 10) {
-//
-//        }
-//        System.out.println();
     }
 
     /**
