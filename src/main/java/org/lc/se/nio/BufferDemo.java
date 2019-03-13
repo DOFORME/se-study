@@ -11,7 +11,13 @@ public class BufferDemo {
 //        judgeModelWithLimit();
 //        transferToDoubleBuffer();
 //        transferToCharBuffer();
-        storeWithDefaultEndian();
+//        storeWithDefaultEndian();
+//        testFlip();
+//        testFlip2();
+//        testClear();
+//        testLimit();
+//        testLimit2();
+        testReadAndWrite();
     }
 
     /**
@@ -60,5 +66,98 @@ public class BufferDemo {
         while (bb.hasRemaining()) {
             System.out.print(bb.get());
         }
+    }
+
+    /**
+     * flip()的作用是将limit设为position的值，position的值设为0
+     * 通过调用此方法，缓冲区从写模式切换到读模式
+     */
+    private static void testFlip() {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{5, 2, 3});
+        System.out.println(bb.position());
+        System.out.println(bb.get());
+        System.out.println(bb.position());
+        bb.flip();
+        System.out.println(bb.position());
+        System.out.println(bb.get());
+    }
+
+    /**
+     * 没有读数据就直接flip()，导致limit为0，不能继续读或写
+     */
+    private static void testFlip2() {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{4, 5, 6});
+        System.out.println(bb.position());
+        bb.flip();
+        System.out.println(bb.position());
+        System.out.println(bb.limit());
+    }
+
+    /**
+     * 设置position的值为0，limit的值位capacity。
+     * 此方法可以用来覆写缓冲区
+     */
+    private static void testClear() {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{2, 3, 4});
+        System.out.println(bb.position());
+        System.out.println(bb.limit());
+        System.out.println(bb.capacity());
+        bb.get();
+        System.out.println(bb.position());
+        System.out.println(bb.limit());
+        System.out.println(bb.capacity());
+        bb.clear();
+        System.out.println(bb.position());
+        System.out.println(bb.limit());
+        System.out.println(bb.capacity());
+    }
+
+    /**
+     * 写模式下limit()的值一直为capacity()
+     */
+    private static void testLimit() {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{1, 2, 3});
+        System.out.println(bb.limit());
+        System.out.println("no1:" + bb.get());
+        System.out.println(bb.limit());
+    }
+
+    /**
+     * 读模式下limit()的值一直为实际数据长度
+     */
+    private static void testLimit2() {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[]{1, 2, 3});
+        System.out.println(bb.limit());
+        ByteBuffer bb2 = ByteBuffer.allocate(3);
+        System.out.println(bb2.limit());
+        bb2.put((byte) 2);
+        bb2.put((byte) 3);
+        bb2.put((byte) 4);
+        System.out.println(bb2.position());
+        System.out.println(bb2.limit());
+        bb2.flip();
+        bb2.get();
+        System.out.println(bb2.position());
+        bb2.get();
+        System.out.println(bb2.position());
+        System.out.println(bb2.limit());
+    }
+
+    /**
+     * ByteBuffer可读的同时也可写
+     */
+    private static void testReadAndWrite() {
+        ByteBuffer bb = ByteBuffer.allocate(2);
+        bb.put((byte) 1);
+        bb.put((byte) 2);
+        // 倒带
+        bb.rewind();
+        // 打印第一个数据
+        System.out.println(bb.get());
+        // 覆盖第二个数据
+        bb.put((byte) 4);
+        bb.rewind();
+        System.out.println(bb.get());
+        System.out.println(bb.get());
     }
 }
