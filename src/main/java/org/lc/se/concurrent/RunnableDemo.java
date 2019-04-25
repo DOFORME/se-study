@@ -1,6 +1,6 @@
 package org.lc.se.concurrent;
 
-public class MyRunnable implements Runnable {
+public class RunnableDemo implements Runnable {
 
     @Override
     public void run() {

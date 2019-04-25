@@ -2,7 +2,7 @@ package org.lc.se.concurrent;
 
 import java.util.concurrent.Callable;
 
-public class MyCallable implements Callable<Integer> {
+public class CallableDemo implements Callable<Integer> {
 
     private int i = 0;
 

@@ -34,7 +34,7 @@ public class ThreadCreateTest {
      * 继承Thread类方式创建线程
      */
     static void testMyThread() {
-        MyThread mt = new MyThread();
+        ThreadDemo mt = new ThreadDemo();
         mt.start();
     }
 
@@ -42,13 +42,13 @@ public class ThreadCreateTest {
      * 实现Callable接口方式创建线程
      */
     static void testMyRunnable() {
-        Thread t = new Thread(new MyRunnable());
+        Thread t = new Thread(new RunnableDemo());
         t.start();
     }
 
     static void testMyRunnable2() {
         ExecutorService es = Executors.newSingleThreadExecutor();
-        MyRunnable mr = new MyRunnable();
+        RunnableDemo mr = new RunnableDemo();
         es.submit(mr);
         es.shutdown();
     }
@@ -66,14 +66,14 @@ public class ThreadCreateTest {
      */
     static void testMyCallableWithFuture() throws ExecutionException, InterruptedException {
         ExecutorService es = Executors.newSingleThreadExecutor();
-        MyCallable mc = new MyCallable();
+        CallableDemo mc = new CallableDemo();
         Future f = es.submit(mc);
         es.shutdown();
         System.out.println(f.get());
     }
 
     static void testMyCallable() throws ExecutionException, InterruptedException {
-        MyCallable mc = new MyCallable();
+        CallableDemo mc = new CallableDemo();
         FutureTask<Integer> futureTask =  new FutureTask<Integer>(mc);
         Thread thread = new Thread(futureTask, "test");
         thread.start();
@@ -83,7 +83,7 @@ public class ThreadCreateTest {
 
     static void testMyCallableWithFutureTask() throws ExecutionException, InterruptedException {
         ExecutorService es = Executors.newSingleThreadExecutor();
-        MyCallable mc = new MyCallable();
+        CallableDemo mc = new CallableDemo();
         FutureTask<Integer> ft = new FutureTask<>(mc);
         es.submit(ft);
         es.shutdown();
@@ -92,7 +92,7 @@ public class ThreadCreateTest {
 
     static void testExecutorService() {
         ExecutorService es = Executors.newSingleThreadExecutor();
-        Thread t = new MyThread();
+        Thread t = new ThreadDemo();
         es.execute(t);
         es.shutdown();
     }
@@ -101,7 +101,7 @@ public class ThreadCreateTest {
         ExecutorService es = Executors.newSingleThreadExecutor();
 //        ExecutorService es = Executors.newFixedThreadPool(0)
         for (int i=0; i<5; i++) {
-            Runnable runnable = new MyRunnable();
+            Runnable runnable = new RunnableDemo();
             es.execute(runnable);
         }
         es.shutdown();
