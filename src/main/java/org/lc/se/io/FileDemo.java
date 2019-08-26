@@ -1,36 +1,187 @@
 package org.lc.se.io;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 public class FileDemo {
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
-//        createFileWithPathAndName();
 
-//        createFileWithPath();
+    @Test
+    void constructor() throws URISyntaxException {
+        // 路径字符串构造器
+        File file = new File("c:\\test\\a.txt");
+        System.out.println(file.length());
+        // 使用符号/代替\
+        file = new File("c:/test/a.txt");
+        System.out.println(file.length());
 
-//        createByParentPathAndFileName();
+        // 父文件路径，子路径构造器
+        file = new File("c:\\test", "a.txt");
+        System.out.println(file.length());
+        file = new File("c:\\test", "b\\a.txt");
+        System.out.println(file.length());
 
-//        createByURI();
+        // 父文件对象，子路径构造器
+        file = new File(new File("c:\\test"), "a.txt");
+        System.out.println(file.length());
 
-//        testSystemSeparator();
-
-//        testMethod();
-
-        testFileLength();
-
-        File file = new File("/");
-        System.out.println(file.getAbsolutePath());
+        // uri构造器
+        file = new File(new URI("file:///c://test/a.txt"));
+        System.out.println(file.length());
     }
 
     /**
+     * 文件分隔符
+     * windows: \
+     * linux: /
+     *
+     * 路径分隔符
+     * windows：;
+     * linux: :
+     */
+    @Test
+    void testSystemSeparator() {
+        System.out.println(File.separator);
+        System.out.println(File.pathSeparator);
+    }
+
+    /**
+     * 路径
+     */
+    @Test
+    void path() throws IOException {
+        File file;
+
+
+        // 项目的绝对路径
+        System.out.println(System.getProperty("user.dir"));
+
+        // 按绝对路径构造返回绝对路径，按相对路径构造返回相对路径
+        file = new File("/test");
+        System.out.println(file.getPath());
+        file = new File("c:\\test\\a.txt");
+        System.out.println(file.getPath());
+
+        // 绝对路径
+        System.out.println(file.getAbsolutePath());
+
+        // 父路径
+        System.out.println(file.getParent());
+
+        System.out.println("name: " + file.getName());
+
+
+        System.out.println(file.getCanonicalPath());
+    }
+
+    /**
+     * 文件状态：
+     * 1. 不存在
+     * 2. 存在
+     *     (1)是文件
+     *     (1)是文件夹
+     */
+    @Test
+    void status() {
+        File file;
+
+        file = new File("c:\\test.png");
+        System.out.println("存在： " + file.exists());
+        System.out.println("是文件： " + file.isFile());
+        System.out.println("是文件夹： " + file.isDirectory());
+
+        file = new File("c:\\test");
+        System.out.println("存在： " + file.exists());
+        System.out.println("是文件： " + file.isFile());
+        System.out.println("是文件夹： " + file.isDirectory());
+
+        file = new File("c:\\test\\a.txt");
+        System.out.println("存在： " + file.exists());
+        System.out.println("是文件： " + file.isFile());
+        System.out.println("是文件夹： " + file.isDirectory());
+    }
+
+    @Test
+    void length() {
+        File file;
+
+        // 文件字节数
+        file = new File("c:/test/a.txt");
+        System.out.println(file.length());
+
+        // 不存在的文件长度为0
+        file = new File("c:/a.txt");
+        System.out.println(file.length());
+
+        // 文件夹长度为0
+        file = new File("c:/test");
+        System.out.println(file.length());
+    }
+
+    @Test
+    void create() throws IOException {
+        File file;
+
+        // 创建文件，存在则创建失败
+        file = new File("c:/test/a.txt");
+        System.out.println(file.createNewFile());
+
+        // 不存在，创建成功
+        file = new File("c:/test/b.txt");
+        System.out.println(file.createNewFile());
+
+        // 文件夹创建，存在则创建失败
+        file = new File("c:/test/b");
+        System.out.println(file.mkdir());
+
+        // 不存在则创建成功
+        file = new File("c:/test/c");
+        System.out.println(file.mkdir());
+
+        file = new File("c:/test/d/a");
+        // 上级目录不存在则创建失败
+        System.out.println(file.mkdir());
+        // 上级目录不存在则创建上级目录
+        System.out.println(file.mkdirs());
+    }
+
+    @Test
+    void delete() {
+        File file;
+
+        // 文件不存在删除失败，返回false
+        file = new File("c:/test/d.txt");
+        System.out.println(file.delete());
+
+        // 文件夹有下级目录则删除失败
+        file = new File("c:/test/d");
+        System.out.println(file.delete());
+
+        // 删除成功返回true
+        file = new File("c:/test/d/a");
+        System.out.println(file.delete());
+
+        // 存在则删除，不存在不做处理
+        file = new File("c:/test/d.txt");
+        file.deleteOnExit();
+    }
+
+
+    /**
+     * 根据路径名创建文件
      * File(String pathname)
      */
-    private static void createFileWithPath() throws IOException {
-        String pathAndName = "c:\\test\\new";
+    @Test
+    void createFileWithPath() throws IOException {
+        // 需要文件夹存在，否则java.io.IOException: 系统找不到指定的路径。
+//        String pathAndName = "c:\\test\\new";
+        String pathAndName = "c:\\test.txt";
         File myFile = new File(pathAndName);
+        // 真正创建文件
         boolean result = myFile.createNewFile();
         System.out.println(result);
     }
@@ -39,9 +190,12 @@ public class FileDemo {
      * 根据父文件夹路径名和自身文件名来创建文件
      * File(String parent, String child)
      */
-    private static void createByParentPathAndFileName() throws IOException {
+    @Test
+    void createByParentPathAndFileName() throws IOException {
         String parentPath = "c:\\";
-        String fileName = "new_2";
+        // 问题同上，需要文件夹存在
+//        String parentPath = "c:\\test";
+        String fileName = "test.txt";
         File myFile = new File(parentPath, fileName);
         boolean result = myFile.createNewFile();
         System.out.println(result);
@@ -50,7 +204,8 @@ public class FileDemo {
     /**
      * File(File parent, String child)
      */
-    private static void createFileWithPathAndName() throws IOException {
+    @Test
+    void createFileWithPathAndName() {
         File parent = new File("c:\\");
         String fileName = "test";
         File myFile = new File(parent, fileName);
@@ -59,11 +214,17 @@ public class FileDemo {
         System.out.println(result);
     }
 
+
     /**
      * 通过前缀file:和uri来在指定位置创建文件
      * File(URI uri)
+     *
+     * @see URI
+     * @see java.net.URL
+     *
      */
-    private static void createByURI() throws URISyntaxException, IOException {
+    @Test
+    void createByURI() throws URISyntaxException, IOException {
         URI uri = new URI("file:///c:/test/new");
         File myFile = new File(uri);
         System.out.println(uri.getPath());
@@ -75,21 +236,36 @@ public class FileDemo {
         System.out.println(myFile.getPath());
     }
 
-    /**
-     * 文件分隔符
-     * windows: \
-     * linux: /
-     */
-    private static void testSystemSeparator() {
-        System.out.println(File.separator);
-        // 系统路径分隔符（windows:';'）
-        System.out.println(File.pathSeparator);
+    @Test
+    void operateFile() throws IOException {
+        // 创建成功
+        File f1 = new File("/1.txt");
+        System.out.println(f1.createNewFile());
+
+        // 如果test文件夹不存在就创建失败抛出异常
+        File f2 = new File("/test/2.txt");
+        System.out.println(f2.createNewFile());
+
+        // 创建目录
+        File f3 = new File("/3");
+        System.out.println(f3.mkdir());
+
+        // 如果文件夹4不存在，则创建失败但没有异常
+        File f4 = new File("/4/a");
+        System.out.println(f4.mkdir());
+
+        // 如果文件夹5不存在则创建
+        File f5 = new File("/5/a");
+        System.out.println(f5.mkdirs());
     }
+
+
 
     /**
      * 创建文件
      */
-    private static void testMethod() {
+    @Test
+    void testMethod() {
         // 如果只有这一行，文件不会被创建，需要明确创建(file.createNewFile())或者写入内容
         // 在项目根目录创建文件
         // "d:"+File.separator
@@ -161,8 +337,22 @@ public class FileDemo {
         System.out.println(testDir.delete());
     }
 
-    private static void testFileLength() {
+    @Test
+    void testFileLength() {
         File file = new File("d://test.txt");
         System.out.println(file.length());
+    }
+
+    @Test
+    void fileNameFilter() {
+        File root = new File("/");
+        File[] files = root.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith("i");
+            }
+        });
+
+        System.out.println(Arrays.toString(files));
     }
 }

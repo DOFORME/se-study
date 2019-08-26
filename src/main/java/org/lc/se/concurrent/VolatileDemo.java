@@ -1,42 +1,67 @@
 package org.lc.se.concurrent;
 
-import org.junit.Test;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author lc
+ * @author lph
  */
 public class VolatileDemo {
 
-    @Test
-    public void t1() {
-        Data data = new Data();
-        Thread t = new Thread(data::add);
-        t.start();
-
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("a" + data.count);
+    public static void main(String[] args) {
+        testReadable2();
     }
 
+    private static void testReadable() {
+        VolatileThreadDemo vtd = new VolatileThreadDemo();
+        new Thread(vtd).start();
+
+        while (true) {
+            if (vtd.isFlag()) {
+                System.out.println("结束");
+                break;
+            }
+        }
+    }
+
+    private static void testReadable2() {
+        VolatileThreadDemo2 vtd = new VolatileThreadDemo2();
+        for (int i = 0; i < 10; i++) {
+            new Thread(vtd).start();
+        }
+    }
 }
 
-class Data extends Thread {
-    int count = 0;
+class VolatileThreadDemo implements Runnable {
 
-    synchronized void add() {
-        System.out.println(count);
-        count++;
+    private volatile boolean flag;
+
+    @Override
+    public void run() {
         try {
-            System.out.println("wait begin");
-            wait();
-            System.out.println("wait over");
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("t" + count);
+
+        flag = true;
+        System.out.println("flag:" + flag);
+    }
+
+    public boolean isFlag() {
+        return flag;
+    }
+}
+
+class VolatileThreadDemo2 implements Runnable {
+    private volatile AtomicInteger value = new AtomicInteger();
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(value.getAndIncrement());
     }
 }
