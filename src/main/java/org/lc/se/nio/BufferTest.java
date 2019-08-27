@@ -1,11 +1,47 @@
 package org.lc.se.nio;
 
+import org.junit.jupiter.api.Test;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.DoubleBuffer;
 
-public class BufferDemo {
+/**
+ * 在nio中，channel负责连接，buffer复制存取数据（数组）
+ * 8种基本数据类型中除了boolean，其他都有对应的buffer
+ *
+ * 通过allocate()获取缓冲区
+ *
+ * 存：put()
+ * 取：get()
+ *
+ * Buffer四个核心属性
+ * capacity：容量，一但声明不能改变
+ * limit：界限，缓冲区中可以操作的数据大小，后面的数据不能读写
+ * position：位置，表示缓冲区中正在操作数据的位置，必须满足
+ *
+ * mark：标记，记录position的位置，可以通过reset()回到mark的位置 mark <= position <= limit <= capacity
+ *
+ * flip()：切换到读模式
+ *
+ * rewind()：倒带，可重复读
+ *
+ * clear()：清空缓冲区，回到最初的状态（里面存放的数据还在，处于被遗忘的数据），可以重新写数据
+ *
+ * hasRemaining()：判断是否还有剩余
+ */
+public class BufferTest {
+
+    @Test
+    void allocate() {
+        // 指定大小的缓冲区
+        ByteBuffer bb = ByteBuffer.allocate(1024);
+
+        System.out.println(bb.capacity());
+        System.out.println(bb.limit());
+        System.out.println(bb.position());
+    }
 
     public static void main(String[] args) {
 //        judgeModelWithLimit();

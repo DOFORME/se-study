@@ -1,5 +1,6 @@
 package org.lc.se.nio;
 
+import org.junit.jupiter.api.Test;
 import org.lc.se.constant.CharsetString;
 
 import java.io.*;
@@ -13,7 +14,7 @@ import java.nio.charset.Charset;
  * Channel是双向的
  * 需要使用InputStream、OutputStream或RandomAccessFile来获取一个FileChannel实例
  */
-public class FileChannelDemo {
+public class FileChannelTest {
     private static final String PATH = "/test.txt";
 
     public static void main(String[] args) {
@@ -136,6 +137,65 @@ public class FileChannelDemo {
                 channel.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+
+    @Test
+    void copy1() {
+        String srcPath = "file/src/d.txt";
+        String desPath = "file/des/d-copy.txt";
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        FileChannel inChannel = null;
+        FileChannel outChannel = null;
+
+        try {
+            fis = new FileInputStream(srcPath);
+            fos = new FileOutputStream(desPath);
+            inChannel = fis.getChannel();
+            outChannel = fos.getChannel();
+
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            while (inChannel.read(buffer) != -1) {
+                buffer.flip();
+                outChannel.write(buffer);
+                buffer.clear();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (outChannel != null) {
+                try {
+                    outChannel.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (inChannel != null) {
+                try {
+                    inChannel.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
