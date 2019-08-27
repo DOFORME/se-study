@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 /**
  * @author lph
  */
-public class ThreadPoolSameDemo {
+public class ThreadPoolTest {
 
     public static void main(String[] args) {
         judgeSame();
