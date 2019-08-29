@@ -8,9 +8,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * 分散与聚集
+ * 分散读取与聚集写入
  */
-public class ScatterAndGatherDemo {
+public class ScatterGatherTest {
     private static final String FILE_PATH = "/test.txt";
     private static final File TEST_FILE = new File(FILE_PATH);
     private static RandomAccessFile RANDOM_ACCESS_FILE;

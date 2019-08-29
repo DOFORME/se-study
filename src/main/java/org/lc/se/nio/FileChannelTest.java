@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
  * FileChannel无法直接打开
  * Channel是双向的
  * 需要使用InputStream、OutputStream或RandomAccessFile来获取一个FileChannel实例
+ * 无法切换成非阻塞式（非阻塞式针对的是网络相关Channel）
  */
 public class FileChannelTest {
     private static final String PATH = "/test.txt";

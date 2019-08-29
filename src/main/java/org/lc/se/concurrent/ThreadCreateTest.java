@@ -1,5 +1,7 @@
 package org.lc.se.concurrent;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.concurrent.*;
 
 /**
@@ -9,26 +11,6 @@ import java.util.concurrent.*;
  * https://www.nowcoder.com/questionTerminal/e33c72bceb4343879948342e2b6e3bca
  */
 public class ThreadCreateTest {
-
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-//        testMyThread();
-
-//        testMyRunnable();
-
-//        testMyRunnable2();
-
-//        testRunnableWithLambda();
-
-//        testMyCallableWithFuture();
-
-//        testMyCallable();
-
-//        testMyCallableWithFutureTask();
-
-//        testExecutorService();
-
-        testExecutorService2();
-    }
 
     /**
      * 继承Thread类方式创建线程
@@ -60,32 +42,44 @@ public class ThreadCreateTest {
     }
 
     /**
-     * callable方式创建线程
-     * @throws ExecutionException
-     * @throws InterruptedException
+     * 通过FutureTask和Thread调用Callable
      */
-    static void testMyCallableWithFuture() throws ExecutionException, InterruptedException {
-        ExecutorService es = Executors.newSingleThreadExecutor();
-        CallableDemo mc = new CallableDemo();
-        Future f = es.submit(mc);
-        es.shutdown();
-        System.out.println(f.get());
-    }
-
-    static void testMyCallable() throws ExecutionException, InterruptedException {
-        CallableDemo mc = new CallableDemo();
-        FutureTask<Integer> futureTask =  new FutureTask<Integer>(mc);
-        Thread thread = new Thread(futureTask, "test");
-        thread.start();
+    @Test
+    void createWithCallable1() throws ExecutionException, InterruptedException {
+        FutureTask<Integer> futureTask = new FutureTask<>(new MyCallable());
+        new Thread(futureTask, "test").start();
+        // get方法会阻塞等待任务完成，任务发生异常时这里会报异常
         System.out.println(futureTask.get());
-        System.out.println(thread.getName());
     }
 
-    static void testMyCallableWithFutureTask() throws ExecutionException, InterruptedException {
+    /**
+     * Callable、线程池方式调用任务
+     */
+    @Test
+    void createWithCallable2() {
         ExecutorService es = Executors.newSingleThreadExecutor();
-        CallableDemo mc = new CallableDemo();
-        FutureTask<Integer> ft = new FutureTask<>(mc);
+        // 提交任务获得Future对象
+        Future<Integer> future = es.submit(new MyCallable());
+        try {
+            System.out.println(future.get());
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 线程池、FutureTask方式创建任务
+     */
+    @Test
+    void createWithCallable3() throws ExecutionException, InterruptedException {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        FutureTask<Integer> ft = new FutureTask<>(new MyCallable());
         es.submit(ft);
+
+        // 如果任务还没完成就强制关闭会报异常，使用温和版的关闭
+        // java.util.concurrent.ExecutionException: java.lang.InterruptedException: sleep interrupted
+        // 此处sleep interrupted是因为测试时使用的是TimeUnit.SECONDS.sleep(1)延长任务执行时间
+        // es.shutdownNow();
         es.shutdown();
         System.out.println(ft.get());
     }
@@ -100,7 +94,7 @@ public class ThreadCreateTest {
     static void testExecutorService2() {
         ExecutorService es = Executors.newSingleThreadExecutor();
 //        ExecutorService es = Executors.newFixedThreadPool(0)
-        for (int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             Runnable runnable = new RunnableDemo();
             es.execute(runnable);
         }

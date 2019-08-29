@@ -1,5 +1,9 @@
 package org.lc.se.concurrent;
 
+import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.TimeUnit;
+
 public class SynchronizedTest implements Runnable {
     static SynchronizedTest instance = new SynchronizedTest();
 
@@ -25,5 +29,31 @@ public class SynchronizedTest implements Runnable {
         for (int j = 0; j < 1000000; j++) {
             i++;
         }
+    }
+
+    @Test
+    void test1() {
+        new Thread(() -> new SynchronizedTestThread().m1()).start();
+
+        new Thread(() -> new SynchronizedTestThread().m1()).start();
+
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class SynchronizedTestThread {
+
+    synchronized void m1() {
+        System.out.println("come in");
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("over in");
     }
 }

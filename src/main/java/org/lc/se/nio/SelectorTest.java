@@ -15,8 +15,10 @@ import java.util.Set;
  * 与Selector一起使用时，Channel必须处于非阻塞模式下。
  * 这意味着不能将FileChannel与Selector一起使用，
  * 因为FileChannel不能切换到非阻塞模式。而套接字通道都可以。
+ *
+ * 要使用非阻塞式io则必须使用Selector
  */
-public class SelectorDemo {
+public class SelectorTest {
 
     public static void main(String[] args) {
         createSelector();
