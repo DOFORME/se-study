@@ -51,6 +51,54 @@ public class ThreadPoolTest {
         }
     }
 
+    /**
+     * 带调度的线程池
+     * 底层是延迟队列DelayedWorkQueue
+     * 适用于延迟或定时执行的线程
+     */
+    @Test
+    void scheduled() {
+        // 使用schedule方式，带调度
+        ScheduledExecutorService scheduledExecutorService = null;
+        try {
+             scheduledExecutorService = Executors.newScheduledThreadPool(3);
+             Future<Double> result;
+            for (int i = 0; i < 10; i++) {
+                result = scheduledExecutorService.schedule(() -> {
+                    System.out.println("scheduling");
+                    return Math.random();
+                }, 2, TimeUnit.SECONDS);
+                System.out.println(result.get());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (scheduledExecutorService != null) {
+                scheduledExecutorService.shutdown();
+            }
+        }
+
+        // 使用submit方式，和普通线程池一样
+        ExecutorService service = null;
+        try {
+            service = Executors.newScheduledThreadPool(3);
+            Future<Double> result;
+            for (int i = 0; i < 10; i++) {
+                result = service.submit(() -> {
+                    System.out.println("scheduling");
+                    return Math.random();
+                });
+                System.out.println(result.get());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (service != null) {
+                service.shutdown();
+            }
+        }
+    }
+
     @Test
     void myThreadPool() {
         ExecutorService es = MyThreadPool.newMyThreadPool();
