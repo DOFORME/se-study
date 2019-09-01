@@ -6,7 +6,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
- * CountDownLatch闭锁
+ * CountDownLatch闭锁/共享锁
  */
 public class CountDownLatchTest {
 

@@ -1,16 +1,15 @@
 package org.lc.se.collection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
 /**
  * @author lc
  */
-public class ArrayListDemo {
+public class ArrayListTest {
 
 
-    @Test
     public void create1() {
         ArrayList<Integer> list1 = new ArrayList<>();
         ArrayList<Integer> list2 = new ArrayList<>(5);
@@ -26,7 +25,6 @@ public class ArrayListDemo {
 
     }
 
-    @Test
     public void iterator() {
         List<Integer> list = new ArrayList<>();
         list.add(5);
@@ -43,7 +41,6 @@ public class ArrayListDemo {
         }
     }
 
-    @Test
     public void range() {
         List<Integer> list = new ArrayList<>();
         list.add(1);
@@ -52,7 +49,6 @@ public class ArrayListDemo {
         System.out.println(list.set(-10, 10));
     }
 
-    @Test
     public void add() {
         List<Integer> list = new ArrayList<>();
         list.add(1);
@@ -61,7 +57,6 @@ public class ArrayListDemo {
         System.out.println(list);
     }
 
-    @Test
     public void arrayCopy() {
         int[] arr1 = {1, 2, 3, 4, 5};
         int[] arr2 = new int[10];
@@ -69,7 +64,6 @@ public class ArrayListDemo {
         System.out.println(Arrays.toString(arr2));
     }
 
-    @Test
     public void base() {
         if (true | getBool(1)) {
             System.out.println("========");
@@ -83,5 +77,23 @@ public class ArrayListDemo {
     boolean getBool(int i) {
         System.out.println("come in" + i);
         return i>0;
+    }
+
+    /**
+     * 迭代时修改
+     * java.lang.UnsupportedOperationException
+     */
+    @Test
+    void modify() {
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
+//        Iterator<Integer> iterator = list.iterator();
+//        while (iterator.hasNext()) {
+//            Integer next = iterator.next();
+//            list.remove(next);
+//        }
+//        for (int i = 0; i < list.size(); i++) {
+//            list.remove(i);
+//        }
+        System.out.println(list);
     }
 }

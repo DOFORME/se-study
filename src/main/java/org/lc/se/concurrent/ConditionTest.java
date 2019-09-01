@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 线程通信，交替打印，多条件精确唤醒
  * @author lph
  */
-public class ConditionDemo {
+public class ConditionTest {
 
     @Test
     void testSignal() {

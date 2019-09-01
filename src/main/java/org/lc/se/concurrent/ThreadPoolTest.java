@@ -6,6 +6,8 @@ import java.util.concurrent.*;
 
 /**
  * @author lph
+ * Executor void execute执行指定的任务无返回值
+ * ExecutorService Future<?> submit有返回值
  */
 public class ThreadPoolTest {
 
@@ -118,17 +120,19 @@ public class ThreadPoolTest {
             e.printStackTrace();
         }
     }
-}
 
-/**
- * 通常项目中自定义线程池而不是使用现有的线程池
- * 通过服务器逻辑处理器的个数(coreSize)确定具体corePoolSize
- * CPU密集型系统：corePoolSize = coreSize + 1
- * IO密集型系统：corePoolSize = coreSize/(1- 0.1(0.2))
- */
-class MyThreadPool{
-    static ThreadPoolExecutor newMyThreadPool() {
-        return new ThreadPoolExecutor(20, 40, 60, TimeUnit.SECONDS
-        , new LinkedBlockingQueue<>(200), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+    /**
+     * 通常项目中自定义线程池而不是使用现有的线程池
+     * 通过服务器逻辑处理器的个数(coreSize)确定具体corePoolSize
+     * CPU密集型系统：corePoolSize = coreSize + 1
+     * IO密集型系统：corePoolSize = coreSize/(1- 0.1(0.2))
+     */
+    static class MyThreadPool{
+        static ThreadPoolExecutor newMyThreadPool() {
+            return new ThreadPoolExecutor(20, 40, 60, TimeUnit.SECONDS
+                    , new LinkedBlockingQueue<>(200), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+        }
     }
 }
+
+
