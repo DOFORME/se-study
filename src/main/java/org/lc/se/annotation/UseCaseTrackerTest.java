@@ -1,10 +1,14 @@
 package org.lc.se.annotation;
 
+import org.junit.jupiter.api.Test;
+
 import java.lang.reflect.Method;
 
-public class UseCaseTracker {
+public class UseCaseTrackerTest {
 
-    public static void trackerUseCase(Class clz) {
+    @Test
+    public void trackerUseCase() {
+        Class<UseCaseCall> clz = UseCaseCall.class;
         for (Method method : clz.getDeclaredMethods()) {
             UseCase uc = method.getAnnotation(UseCase.class);
             if (uc != null) {
@@ -13,9 +17,5 @@ public class UseCaseTracker {
                 System.out.println("description为" + uc.description());
             }
         }
-    }
-
-    public static void main(String[] args) {
-        trackerUseCase(UseCaseCall.class);
     }
 }
