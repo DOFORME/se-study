@@ -8,12 +8,21 @@ import java.lang.annotation.Target;
 /**
  * 自定义注解：
  * 1.通过 @interface 来声明这是一个注解
- * 2.@Target来声明注解作用范围
+ * 2.@Target来声明注解作用范围（没指定的话则可以到处使用）
  * 3.@Retention来声明保留策略
  * 4.像方法声明一样的实例属性声明
  *
  * 当一个注解没有任何属性时表明是一个标志注解（类似Serializable接口）
  * 自定义注解框架中使用的多，平时一般不怎么使用，通常配合反射实现特定功能
+ * 只有RetentionPolicy.RUNTIME才能通过反射获得
+ *
+ * 自定义注解元素的类型：
+ * 8大基本类型（包装类型不行）
+ * String
+ * Class
+ * enum
+ * Annotation
+ * 上述类型的数组
  */
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
