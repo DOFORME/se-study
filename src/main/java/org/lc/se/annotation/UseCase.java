@@ -23,6 +23,8 @@ import java.lang.annotation.Target;
  * enum
  * Annotation
  * 上述类型的数组
+ *
+ * @author lc
  */
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
